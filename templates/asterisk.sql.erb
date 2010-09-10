@@ -1,0 +1,233 @@
+-- MySQL dump 10.11
+--
+-- Host: localhost    Database: <%= asterisk_db %>
+-- ------------------------------------------------------
+-- Server version	5.0.77
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `extensions`
+--
+
+DROP TABLE IF EXISTS `extensions`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `extensions` (
+  `id` int(11) NOT NULL auto_increment,
+  `context` varchar(20) NOT NULL default '',
+  `exten` varchar(20) NOT NULL default '',
+  `priority` tinyint(4) NOT NULL default '0',
+  `app` varchar(20) NOT NULL default '',
+  `appdata` varchar(128) NOT NULL default '',
+  PRIMARY KEY  (`context`,`exten`,`priority`),
+  KEY `id` (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `extensions`
+--
+
+LOCK TABLES `extensions` WRITE;
+/*!40000 ALTER TABLE `extensions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `extensions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `queue_members`
+--
+
+DROP TABLE IF EXISTS `queue_members`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `queue_members` (
+  `uniqueid` int(10) unsigned NOT NULL auto_increment,
+  `membername` varchar(40) default NULL,
+  `queue_name` varchar(128) default NULL,
+  `interface` varchar(128) default NULL,
+  `penalty` int(11) default NULL,
+  `paused` tinyint(1) default NULL,
+  PRIMARY KEY  (`uniqueid`),
+  UNIQUE KEY `queue_interface` (`queue_name`,`interface`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `queue_members`
+--
+
+LOCK TABLES `queue_members` WRITE;
+/*!40000 ALTER TABLE `queue_members` DISABLE KEYS */;
+/*!40000 ALTER TABLE `queue_members` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `queues`
+--
+
+DROP TABLE IF EXISTS `queues`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `queues` (
+  `name` varchar(128) NOT NULL,
+  `musiconhold` varchar(128) default NULL,
+  `announce` varchar(128) default NULL,
+  `context` varchar(128) default NULL,
+  `timeout` int(11) default NULL,
+  `monitor_type` varchar(50) NOT NULL,
+  `monitor_format` varchar(128) default NULL,
+  `queue_youarenext` varchar(128) default NULL,
+  `queue_thereare` varchar(128) default NULL,
+  `queue_callswaiting` varchar(128) default NULL,
+  `queue_holdtime` varchar(128) default NULL,
+  `queue_minutes` varchar(128) default NULL,
+  `queue_seconds` varchar(128) default NULL,
+  `queue_lessthan` varchar(128) default NULL,
+  `queue_thankyou` varchar(128) default NULL,
+  `queue_reporthold` varchar(128) default NULL,
+  `announce_frequency` int(11) default NULL,
+  `announce_round_seconds` int(11) default NULL,
+  `announce_holdtime` varchar(128) default NULL,
+  `retry` int(11) default NULL,
+  `wrapuptime` int(11) default NULL,
+  `maxlen` int(11) default NULL,
+  `servicelevel` int(11) default NULL,
+  `strategy` varchar(128) default NULL,
+  `joinempty` varchar(128) default NULL,
+  `leavewhenempty` varchar(128) default NULL,
+  `eventmemberstatus` varchar(4) default NULL,
+  `eventwhencalled` varchar(4) default NULL,
+  `reportholdtime` tinyint(1) default NULL,
+  `memberdelay` int(11) default NULL,
+  `weight` int(11) default NULL,
+  `timeoutrestart` tinyint(1) default NULL,
+  `periodic_announce` varchar(50) default NULL,
+  `periodic_announce_frequency` int(11) default NULL,
+  `ringinuse` tinyint(1) default NULL,
+  PRIMARY KEY  (`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `queues`
+--
+
+LOCK TABLES `queues` WRITE;
+/*!40000 ALTER TABLE `queues` DISABLE KEYS */;
+/*!40000 ALTER TABLE `queues` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `sip_buddies`
+--
+
+DROP TABLE IF EXISTS `sip_buddies`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `sip_buddies` (
+  `id` int(11) NOT NULL auto_increment,
+  `name` varchar(80) NOT NULL default '',
+  `accountcode` varchar(20) default NULL,
+  `amaflags` varchar(7) default NULL,
+  `callgroup` varchar(10) default NULL,
+  `callerid` varchar(80) default NULL,
+  `canreinvite` char(3) default 'yes',
+  `context` varchar(80) default NULL,
+  `defaultip` varchar(15) default NULL,
+  `dtmfmode` varchar(7) default NULL,
+  `fromuser` varchar(80) default NULL,
+  `fromdomain` varchar(80) default NULL,
+  `fullcontact` varchar(80) default NULL,
+  `host` varchar(31) NOT NULL default '',
+  `insecure` varchar(20) default NULL,
+  `language` char(2) default NULL,
+  `mailbox` varchar(50) default NULL,
+  `md5secret` varchar(80) default NULL,
+  `nat` varchar(5) NOT NULL default 'no',
+  `deny` varchar(95) default NULL,
+  `permit` varchar(95) default NULL,
+  `mask` varchar(95) default NULL,
+  `pickupgroup` varchar(10) default NULL,
+  `port` varchar(5) NOT NULL default '',
+  `qualify` char(3) default NULL,
+  `restrictcid` char(1) default NULL,
+  `rtptimeout` char(3) default NULL,
+  `rtpholdtimeout` char(3) default NULL,
+  `secret` varchar(80) default NULL,
+  `type` varchar(6) NOT NULL default 'friend',
+  `username` varchar(80) NOT NULL default '',
+  `disallow` varchar(100) default 'all',
+  `allow` varchar(100) default 'g729;ilbc;gsm;ulaw;alaw',
+  `musiconhold` varchar(100) default NULL,
+  `regseconds` int(11) NOT NULL default '0',
+  `ipaddr` varchar(15) NOT NULL default '',
+  `regexten` varchar(80) NOT NULL default '',
+  `cancallforward` char(3) default 'yes',
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `name` (`name`),
+  KEY `name_2` (`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `sip_buddies`
+--
+
+LOCK TABLES `sip_buddies` WRITE;
+/*!40000 ALTER TABLE `sip_buddies` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sip_buddies` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `voicemessages`
+--
+
+DROP TABLE IF EXISTS `voicemessages`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `voicemessages` (
+  `id` int(11) NOT NULL auto_increment,
+  `msgnum` int(11) NOT NULL default '0',
+  `dir` varchar(80) default '',
+  `context` varchar(80) default '',
+  `macrocontext` varchar(80) default '',
+  `callerid` varchar(40) default '',
+  `origtime` varchar(40) default '',
+  `duration` varchar(20) default '',
+  `mailboxuser` varchar(80) default '',
+  `mailboxcontext` varchar(80) default '',
+  `recording` longblob,
+  PRIMARY KEY  (`id`),
+  KEY `dir` (`dir`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `voicemessages`
+--
+
+LOCK TABLES `voicemessages` WRITE;
+/*!40000 ALTER TABLE `voicemessages` DISABLE KEYS */;
+/*!40000 ALTER TABLE `voicemessages` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2010-08-26  7:43:24
