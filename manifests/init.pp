@@ -19,8 +19,9 @@ class asterisk {
 					source => "puppet://$server/asterisk/centos-digium.repo",
 					before => Package["$asterisk_packages"]
 				}				
-# Install asterisk dependcies
-				$asterisk_packages = ["asterisk$version", "asterisk$version-configs", "asterisk-addons-mysql"]
+				
+				# Install asterisk dependcies
+				$asterisk_packages = ["asterisk$version", "asterisk$version-configs", "asterisk$version-addons-mysql"]
 				$mysql_packages = [ "mysql-server", "mysql" ]
 				package { $asterisk_packages: ensure => installed }
 				package { $mysql_packages: ensure => installed }
@@ -43,9 +44,10 @@ class asterisk {
 		# Take root password and create the asterisk DB
 		# Create the Asterisk Tables
 		exec { "create_asterisk_db" :
-			command => "mysql -u root -predhat -e 'CREATE DATABASE $asterisk_db; GRANT ALL PRIVILEGES ON $asterisk_db.* TO '$asterisk_user'@'localhost' IDENTIFIED BY '$asterisk_db_password' WITH GRANT OPTION;'",
+			command => "mysql -u root -p$root_password -e 'CREATE DATABASE $asterisk_db; GRANT ALL PRIVILEGES ON $asterisk_db.* TO '$asterisk_db_user'@'localhost' IDENTIFIED BY \"$asterisk_db_password\" WITH GRANT OPTION;'",
 			path	=> "/usr/bin:/usr/sbin:/bin",
-#			require => Class["install"]
+#			require => Class["install"],
+			before => Exec["import_database"]
 		}
 
 		file { "/var/lib/mysql/asterisk.sql":
