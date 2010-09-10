@@ -1,0 +1,5 @@
+asterisk-realtime
+
+A Puppet module to automate the installation and configuration of Asterisk in real time mode (Asterisk Realtime Archecticture),it allows you to store some asterisk configuration parameters into a MySQL DB, changes to the DB values will occur instantly without reloading the Asterisk daemon.
+
+Based on the tutorial at 
