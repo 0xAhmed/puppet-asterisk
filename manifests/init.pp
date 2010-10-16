@@ -11,4 +11,7 @@
 # Sample Usage:
 #
 # [Remember: No empty lines between comments and class definition]
-import "*"
+class asterisk {
+	include asterisk::install
+	include asterisk::mysql_config
+}
