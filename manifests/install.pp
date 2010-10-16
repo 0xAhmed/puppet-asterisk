@@ -1,5 +1,4 @@
-class asterisk {
-	class install ($version=14) {
+class asterisk::install ($version=14) {
 		case $operatingsystem {
 			"CentOS" : {
 				# Installing Asterisk+Digium YUM Repos								
@@ -38,7 +37,7 @@ class asterisk {
 		}
 
 		
-	}
+	
 
 }
 
