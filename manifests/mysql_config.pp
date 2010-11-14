@@ -1,11 +1,10 @@
-class asterisk {
-	class mysql_config ($root_password, $asterisk_db="asterisk", $asterisk_db_user="asterisk", $asterisk_db_password="redhat") {
+class asterisk::mysql_config ($root_password, $asterisk_db="asterisk", $asterisk_db_user="asterisk", $asterisk_db_password="redhat") {
 		# Take root password and create the asterisk DB
 		# Create the Asterisk Tables
 		exec { "create_asterisk_db" :
 			command => "mysql -u root -p$root_password -e 'CREATE DATABASE $asterisk_db; GRANT ALL PRIVILEGES ON $asterisk_db.* TO '$asterisk_db_user'@'localhost' IDENTIFIED BY \"$asterisk_db_password\" WITH GRANT OPTION;'",
 			path	=> "/usr/bin:/usr/sbin:/bin",
-#			require => Class["install"],
+			require => Class["asterisk::install"],
 			before => Exec["import_database"]
 		}
 
@@ -35,7 +34,7 @@ class asterisk {
 			command => "mysql -u root -p$root_password $asterisk_db < asterisk.sql",
 			path => "/usr/bin:/usr/sbin:/bin",
 			require => File["/var/lib/mysql/asterisk.sql"],
-#			notify => Service["asterisk"]
+			notify => Class["asterisk::service"]
 		}
-	}	
+		
 }

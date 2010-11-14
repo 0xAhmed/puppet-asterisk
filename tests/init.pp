@@ -1,6 +1,6 @@
+import "asterisk"
 node 'server1.example.com' {
 	include asterisk::install
-	class { "asterisk::mysql_config" :
-	root_password =>  "redhat"
-  }
+	include asterisk::service
+	class { asterisk::mysql_config: root_password =>  "redhat" }
 }

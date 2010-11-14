@@ -27,6 +27,9 @@ class asterisk::install ($version=14) {
 			}				
 		}
 
+}
+
+class asterisk::service {
 		service { "asterisk":
 			enable => true,
 			ensure => running,
@@ -35,9 +38,5 @@ class asterisk::install ($version=14) {
 			require	=> Package["$asterisk_pacakges"],
 			alias => "asterisk"
 		}
-
-		
-	
-
 }
 
